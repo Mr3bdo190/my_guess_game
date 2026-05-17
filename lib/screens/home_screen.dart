@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../utils/constants.dart';
 import 'game_room_screen.dart';
+import 'bluetooth_lobby_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -10,15 +11,16 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: GameColors.background,
       appBar: AppBar(
-        title: const Text('لعبة التخمين المزدوج', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text('لعبة التخمين المزدوج 🎭', style: TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: GameColors.primary,
         elevation: 0,
+        centerTitle: true,
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.people_alt, size: 120, color: GameColors.secondary),
+            const Text('🧠', style: TextStyle(fontSize: 100)),
             const SizedBox(height: 30),
             const Text(
               'اختر فئة وابحث عن منافس!',
@@ -30,10 +32,10 @@ class HomeScreen extends StatelessWidget {
               runSpacing: 15,
               alignment: WrapAlignment.center,
               children: [
-                _buildCategoryButton(context, 'حيوانات', Icons.pets),
-                _buildCategoryButton(context, 'سيارات', Icons.directions_car),
-                _buildCategoryButton(context, 'رياضة', Icons.sports_soccer),
-                _buildCategoryButton(context, 'ماركات', Icons.storefront),
+                _buildCategoryButton(context, 'حيوانات 🦁', Icons.pets),
+                _buildCategoryButton(context, 'سيارات 🏎️', Icons.directions_car),
+                _buildCategoryButton(context, 'رياضة ⚽', Icons.sports_soccer),
+                _buildCategoryButton(context, 'ماركات 👟', Icons.storefront),
               ],
             ),
             const SizedBox(height: 50),
@@ -41,11 +43,12 @@ class HomeScreen extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
                 padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
               ),
-              icon: const Icon(Icons.wifi, color: Colors.white),
-              label: const Text('اللعب مع صديق (Wi-Fi/Bluetooth)', style: TextStyle(color: Colors.white, fontSize: 16)),
+              icon: const Text('📶', style: TextStyle(fontSize: 18)),
+              label: const Text('اللعب مع صديق بجانبك', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
               onPressed: () {
-                // سيتم برمجتها لاحقاً
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const BluetoothLobbyScreen()));
               },
             ),
           ],
@@ -64,7 +67,6 @@ class HomeScreen extends StatelessWidget {
       icon: Icon(icon, color: GameColors.secondary),
       label: Text(title, style: const TextStyle(color: GameColors.text, fontSize: 18)),
       onPressed: () {
-        // الانتقال لغرفة اللعب (محاكاة البحث عن لاعب)
         Navigator.push(context, MaterialPageRoute(builder: (context) => GameRoomScreen(category: title)));
       },
     );
