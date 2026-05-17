@@ -12,7 +12,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   nearby_connections: ^3.1.2
-  permission_handler: ^11.3.0
+  # تحديد الإصدار بدقة بدون علامة ^ لمنع التحديث التلقائي
+  permission_handler: 11.2.0
   
   cupertino_icons: ^1.0.2
 
