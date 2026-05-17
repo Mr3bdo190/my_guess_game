@@ -13,7 +13,7 @@ class BluetoothLobbyScreen extends StatefulWidget {
 
 class _BluetoothLobbyScreenState extends State<BluetoothLobbyScreen> {
   final String userName = "لاعب_${DateTime.now().millisecond}";
-  final Strategy strategy = Strategy.P2P_STAR; // أفضل استراتيجية للألعاب الثنائية
+  final Strategy strategy = Strategy.P2P_STAR;
   Map<String, ConnectionInfo> discoveredDevices = {};
   bool isAdvertising = false;
   bool isDiscovering = false;
@@ -24,7 +24,6 @@ class _BluetoothLobbyScreenState extends State<BluetoothLobbyScreen> {
     requestPermissions();
   }
 
-  // طلب الصلاحيات اللازمة للبلوتوث والموقع (مهم جداً في أندرويد)
   void requestPermissions() async {
     await [
       Permission.location,
@@ -36,7 +35,6 @@ class _BluetoothLobbyScreenState extends State<BluetoothLobbyScreen> {
     ].request();
   }
 
-  // بدء بث الغرفة (Host)
   void startHosting() async {
     try {
       bool a = await Nearby().startAdvertising(
@@ -60,7 +58,6 @@ class _BluetoothLobbyScreenState extends State<BluetoothLobbyScreen> {
     }
   }
 
-  // بدء البحث عن غرف (Discover)
   void startDiscovering() async {
     try {
       bool d = await Nearby().startDiscovery(
@@ -68,8 +65,8 @@ class _BluetoothLobbyScreenState extends State<BluetoothLobbyScreen> {
         strategy,
         onEndpointFound: (id, name, serviceId) {
           setState(() {
-            // إضافة الجهاز المكتشف للقائمة
-            discoveredDevices[id] = ConnectionInfo(endpointName: name, authenticationToken: '', isIncomingConnection: false);
+            // الإصلاح الأول: إزالة أسماء المتغيرات
+            discoveredDevices[id] = ConnectionInfo(name, '', false);
           });
         },
         onEndpointLost: (id) {
@@ -86,13 +83,12 @@ class _BluetoothLobbyScreenState extends State<BluetoothLobbyScreen> {
     }
   }
 
-  // عندما يطلب جهاز الاتصال
   void onConnectionInit(String id, ConnectionInfo info) {
     Nearby().acceptConnection(
       id,
-      onPayLoadReceived: (endId, payload) {
-        // استقبال البيانات (الشات، الصور، التخمين) سيتم برمجتها هنا
-      },
+      // الإصلاح الثاني: استخدام الإملاء الخاص بالمكتبة وإضافة الدالة الناقصة
+      onPayLoadRecieved: (endId, payload) {},
+      onPayloadTransferUpdate: (endId, payloadTransferUpdate) {},
     );
   }
 
@@ -159,7 +155,8 @@ class _BluetoothLobbyScreenState extends State<BluetoothLobbyScreen> {
                             title: Text(info.endpointName, style: const TextStyle(color: Colors.white)),
                             subtitle: const Text('اضغط للطلب والانضمام 🎮', style: TextStyle(color: Colors.white70)),
                             trailing: const Icon(Icons.cloud_upload, color: GameColors.secondary),
-                            onPressed: () {
+                            // الإصلاح الثالث: استخدام onTap بدلاً من onPressed
+                            onTap: () {
                               Nearby().requestConnection(
                                 userName,
                                 id,
