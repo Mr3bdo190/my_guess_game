@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
+import 'utils/constants.dart';
 import 'screens/home_screen.dart';
 
 void main() {
-  runApp(const DoubleGuessGameApp());
+  runApp(const GuessGameApp());
 }
 
-class DoubleGuessGameApp extends StatelessWidget {
-  const DoubleGuessGameApp({super.key});
+class GuessGameApp extends StatelessWidget {
+  const GuessGameApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'لعبة التخمين المزدوج',
-      home: HomeScreen(),
+      title: 'لعبة التخمين التنافسية',
+      theme: ThemeData.dark().copyWith(
+        primaryColor: GameColors.primary,
+        scaffoldBackgroundColor: GameColors.background,
+      ),
+      home: const HomeScreen(),
     );
   }
 }
