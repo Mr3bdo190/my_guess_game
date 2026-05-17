@@ -13,15 +13,14 @@ class _GameRoomScreenState extends State<GameRoomScreen> {
   int myWins = 0;
   int opponentWins = 0;
   final TextEditingController _chatController = TextEditingController();
-  List<String> chatMessages = ["النظام: بدأت الجولة الأولى!"];
+  List<String> chatMessages = ["🤖 النظام: بدأت الجولة الأولى!"];
 
   void _sendMessage() {
     if (_chatController.text.isNotEmpty) {
       setState(() {
-        chatMessages.add("أنت: \${_chatController.text}");
-        // محاكاة لرد الخصم
+        chatMessages.add("أنت: ${_chatController.text}");
         if (_chatController.text.contains("؟")) {
-           chatMessages.add("الخصم: لا أعتقد ذلك.");
+           chatMessages.add("الخصم: لا أعتقد ذلك 😅");
         }
         _chatController.clear();
       });
@@ -33,28 +32,26 @@ class _GameRoomScreenState extends State<GameRoomScreen> {
     return Scaffold(
       backgroundColor: GameColors.background,
       appBar: AppBar(
-        title: Text('غرفة: \${widget.category}'),
+        title: Text('غرفة: ${widget.category} 🎮'),
         backgroundColor: GameColors.primary,
         actions: [
-           IconButton(icon: const Icon(Icons.mic), onPressed: () {}), // زر الصوت
+           IconButton(icon: const Text('🎤', style: TextStyle(fontSize: 20)), onPressed: () {}),
         ],
       ),
       body: Column(
         children: [
-          // شريط النتائج (Best of 3)
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text('أنت: \$myWins/2', style: const TextStyle(color: Colors.greenAccent, fontSize: 20, fontWeight: FontWeight.bold)),
-                const Text('الجولة 1', style: TextStyle(color: Colors.white70, fontSize: 18)),
-                Text('الخصم: \$opponentWins/2', style: const TextStyle(color: Colors.redAccent, fontSize: 20, fontWeight: FontWeight.bold)),
+                Text('أنت: $myWins/2', style: const TextStyle(color: Colors.greenAccent, fontSize: 20, fontWeight: FontWeight.bold)),
+                const Text('الجولة 1 ⏳', style: TextStyle(color: Colors.white70, fontSize: 18)),
+                Text('الخصم: $opponentWins/2', style: const TextStyle(color: Colors.redAccent, fontSize: 20, fontWeight: FontWeight.bold)),
               ],
             ),
           ),
           
-          // منطقة عرض صورة الخصم (التي يجب أن تخمنها أنت)
           Expanded(
             flex: 2,
             child: Container(
@@ -67,11 +64,11 @@ class _GameRoomScreenState extends State<GameRoomScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
-                  Text('هذه هي صورة الخصم', style: TextStyle(color: Colors.white70, fontSize: 16)),
+                  Text('هذه هي صورة الخصم 👁️', style: TextStyle(color: Colors.white70, fontSize: 16)),
                   SizedBox(height: 10),
-                  Icon(Icons.image, size: 80, color: Colors.grey),
+                  Text('🦁', style: TextStyle(fontSize: 80)), // إيموجي كبديل للصورة
                   SizedBox(height: 10),
-                  Text('ساعده في تخمينها!', style: TextStyle(color: GameColors.secondary, fontWeight: FontWeight.bold)),
+                  Text('ساعده في تخمينها! 🤝', style: TextStyle(color: GameColors.secondary, fontWeight: FontWeight.bold)),
                 ],
               ),
             ),
@@ -79,7 +76,6 @@ class _GameRoomScreenState extends State<GameRoomScreen> {
           
           const SizedBox(height: 10),
           
-          // مساحة الشات
           Expanded(
             flex: 2,
             child: Container(
@@ -94,14 +90,13 @@ class _GameRoomScreenState extends State<GameRoomScreen> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: Text(chatMessages[index], style: const TextStyle(color: Colors.white)),
+                    child: Text(chatMessages[index], style: const TextStyle(color: Colors.white, fontSize: 16)),
                   );
                 },
               ),
             ),
           ),
           
-          // حقل إدخال الشات والرد
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: Row(
@@ -111,7 +106,7 @@ class _GameRoomScreenState extends State<GameRoomScreen> {
                     controller: _chatController,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      hintText: 'اسأل سؤالاً (مثال: هل هو حيوان أليف؟)',
+                      hintText: 'اسأل سؤالاً...',
                       hintStyle: const TextStyle(color: Colors.white54),
                       filled: true,
                       fillColor: GameColors.panel,
@@ -125,7 +120,7 @@ class _GameRoomScreenState extends State<GameRoomScreen> {
                   backgroundColor: GameColors.primary,
                   radius: 25,
                   child: IconButton(
-                    icon: const Icon(Icons.send, color: Colors.white),
+                    icon: const Text('🚀', style: TextStyle(fontSize: 20)),
                     onPressed: _sendMessage,
                   ),
                 ),
@@ -133,7 +128,6 @@ class _GameRoomScreenState extends State<GameRoomScreen> {
             ),
           ),
           
-          // زر التخمين النهائي
           Padding(
             padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
             child: SizedBox(
@@ -144,10 +138,8 @@ class _GameRoomScreenState extends State<GameRoomScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                 ),
-                child: const Text('عرفت صورتي! (تخمين نهائي)', style: TextStyle(fontSize: 18, color: Colors.black87, fontWeight: FontWeight.bold)),
-                onPressed: () {
-                  // فتح نافذة لكتابة التخمين النهائي
-                },
+                child: const Text('عرفت صورتي! 💡', style: TextStyle(fontSize: 18, color: Colors.black87, fontWeight: FontWeight.bold)),
+                onPressed: () {},
               ),
             ),
           )
