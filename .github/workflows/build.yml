@@ -19,10 +19,11 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
+      # استخدام إصدار 3.13.9 بدلاً من channel: 'stable'
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
+          flutter-version: '3.13.9'
 
       - name: Generate Flutter Structure
         run: flutter create --project-name my_game --org com.abdullah .
