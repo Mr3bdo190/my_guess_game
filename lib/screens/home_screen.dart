@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../utils/constants.dart';
-import 'game_screen.dart';
+import 'game_room_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -8,47 +8,65 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: GameColors.background,
       appBar: AppBar(
-        title: const Text('التخمين التنافسي', style: TextStyle(fontWeight: FontWeight.bold)),
-        centerTitle: true,
+        title: const Text('لعبة التخمين المزدوج', style: TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: GameColors.primary,
+        elevation: 0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Icon(Icons.videogame_asset, size: 100, color: GameColors.accent),
-            const SizedBox(height: 40),
+            const Icon(Icons.people_alt, size: 120, color: GameColors.secondary),
+            const SizedBox(height: 30),
             const Text(
-              'اختر فئة اللعب:',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: GameColors.text),
+              'اختر فئة وابحث عن منافس!',
+              style: TextStyle(color: GameColors.text, fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 20),
-            ElevatedButton.icon(
-              style: GameStyles.mainButton,
-              icon: const Icon(Icons.branding_watermark),
-              label: const Text('ماركات عالمية'),
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const GameScreen(category: 'ماركات عالمية')),
-              ),
+            const SizedBox(height: 40),
+            Wrap(
+              spacing: 15,
+              runSpacing: 15,
+              alignment: WrapAlignment.center,
+              children: [
+                _buildCategoryButton(context, 'حيوانات', Icons.pets),
+                _buildCategoryButton(context, 'سيارات', Icons.directions_car),
+                _buildCategoryButton(context, 'رياضة', Icons.sports_soccer),
+                _buildCategoryButton(context, 'ماركات', Icons.storefront),
+              ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 50),
             ElevatedButton.icon(
-              style: GameStyles.mainButton,
-              icon: const Icon(Icons.sports_soccer),
-              label: const Text('شخصيات رياضية'),
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const GameScreen(category: 'شخصيات رياضية')),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
               ),
+              icon: const Icon(Icons.wifi, color: Colors.white),
+              label: const Text('اللعب مع صديق (Wi-Fi/Bluetooth)', style: TextStyle(color: Colors.white, fontSize: 16)),
+              onPressed: () {
+                // سيتم برمجتها لاحقاً
+              },
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildCategoryButton(BuildContext context, String title, IconData icon) {
+    return ElevatedButton.icon(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: GameColors.panel,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      ),
+      icon: Icon(icon, color: GameColors.secondary),
+      label: Text(title, style: const TextStyle(color: GameColors.text, fontSize: 18)),
+      onPressed: () {
+        // الانتقال لغرفة اللعب (محاكاة البحث عن لاعب)
+        Navigator.push(context, MaterialPageRoute(builder: (context) => GameRoomScreen(category: title)));
+      },
     );
   }
 }
