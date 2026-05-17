@@ -12,8 +12,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   nearby_connections: ^3.1.2
-  # تحديد الإصدار بدقة بدون علامة ^ لمنع التحديث التلقائي
-  permission_handler: 11.2.0
+  # تحديد الإصدار الذي اقترحه فلاتر لحل المشكلة
+  permission_handler: 11.0.1
   
   cupertino_icons: ^1.0.2
 
